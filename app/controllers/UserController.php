@@ -1,15 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: avolo
- * Date: 12-Aug-18
- * Time: 19:23
- */
 
 namespace app\controllers;
 
 
-class UserController
-{
+use app\models\User;
 
+class UserController extends AppController
+{
+    public function signupAction(){
+        if(!empty($_POST)){
+            $user = new User();
+            $data = $_POST;
+            $user->load($data);
+            debug($user);
+            die;
+        }
+        $this->setMeta('Registration');
+    }
+
+    public function loginAction()
+    {
+        
+    }
+
+    public function logoutAction()
+    {
+        
+    }
+    
 }
