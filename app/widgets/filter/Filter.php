@@ -22,12 +22,12 @@ class Filter
         $this->groups = $cache->get('filter_group');
         if(!$this->groups){
             $this->groups = $this->getGroups();
-            $cache->set('filter_group', $this->groups, 1);
+            $cache->set('filter_group', $this->groups, 40);
         }
         $this->attrs = $cache->get('filter_attrs');
         if(!$this->attrs){
-            $this->attrs = $this->getAttrs();
-            $cache->set('filter_group', $this->attrs, 1);
+            $this->attrs = self::getAttrs();
+            $cache->set('filter_group', $this->attrs, 40);
         }
         $filters = $this->getHtml();
         echo $filters;
@@ -50,7 +50,7 @@ class Filter
         return \R::getAssoc('SELECT id, title FROM attribute_group');
     }
 
-    protected function getAttrs()
+    protected static function getAttrs()
     {
         $data = \R::getAssoc('SELECT * FROM attribute_value');
         $attrs = [];
@@ -68,5 +68,25 @@ class Filter
             $filter = rtrim($filter, ',');
         }
         return $filter;
+    }
+
+    public static function getCountGroups($filter)
+    {
+        $filters = explode(',', $filter);
+        $cache = Cache::instance();
+        $attrs = $cache->get('filter_attrs');
+        if(!$attrs){
+            $attrs = self::getAttrs();
+        }
+        $data = [];
+        foreach ($attrs as $key => $item){
+            foreach ($item as $k => $v){
+                if(in_array($k, $filters)){
+                    $data[] = $key;
+                    break;
+                }
+            }
+        }
+        return count($data);
     }
 }
