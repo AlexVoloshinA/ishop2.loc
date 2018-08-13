@@ -23,7 +23,7 @@ class Router{
         $url = self::removeQueryString($url);
         if(self::matchRoute($url)){
             $controller = 'app\controllers\\' . self::$route['prefix'] . self::$route['controller'] . 'Controller';
-            if(class_exists($controller)){
+            if(class_exists($controller) || $controller == 'app\controllers\CategoryController'){
                 $controllerObject = new $controller(self::$route);
                 $action = self::lowerCamelCase(self::$route['action']) . 'Action';
                 if(method_exists($controllerObject, $action)){
