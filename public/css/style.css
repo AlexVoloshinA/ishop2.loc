@@ -3205,3 +3205,23 @@ form .has-error .form-control{
 	right: 10px;
 	top: 25px;
 }
+
+.product-one > .product-left{
+	margin-bottom: 20px;
+}
+
+.quantity {
+	margin-top: 3em;
+	margin-right: 10px;
+	float: left;
+}
+
+#cart img,
+.cart table img {
+	height: 50px;
+}
+
+.del-item {
+	cursor: pointer;
+}
+
